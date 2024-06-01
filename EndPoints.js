@@ -26,5 +26,5 @@ mongoose.connect(process.env.MONGO_ATLAS_URI)
 app.use(User);
 app.use(MoviesList);
 
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
