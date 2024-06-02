@@ -144,14 +144,14 @@ const MovieListService = {
             }
         }
     },
-    searchMovieLists: async (userId, name) => {
+    searchMovieLists: async (name) => {
         try {
             const lowerCasedName = name.toLowerCase();
             const regexName = new RegExp(`^${lowerCasedName}$`, 'i');
             const lists = await MovieList.find({ name: regexName });
 
             const filteredLists = lists.filter(list => {
-                return list.isPublic || list.userId.toString() === userId;
+                return list.isPublic;
             });
 
             console.log(lists, filteredLists);

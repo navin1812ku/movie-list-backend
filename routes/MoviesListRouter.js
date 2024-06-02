@@ -65,8 +65,7 @@ router.get('/allMoviesList', verifyToken, async (req, res) => {
 
 router.get('/searchMovieList/:name', verifyToken, async (req, res) => {
     const { name } = req.params;
-    const userId = req.user.userId;
-    const movieLists = await MovieListService.searchMovieLists(userId, name);
+    const movieLists = await MovieListService.searchMovieLists(name);
     res.json(movieLists);
 })
 
