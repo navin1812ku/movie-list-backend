@@ -23,7 +23,7 @@ const MovieListService = {
                 isPublic: movieListDetails.isPublic
             }
             const list = await MovieList.findOne({ name: movieListDetails.name });
-            if (list.userId !== userId) {
+            if (list.userId === userId) {
                 return { message: "Movie list name already exists, please try another name" }
             }
             else {
