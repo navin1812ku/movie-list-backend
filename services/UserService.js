@@ -91,7 +91,7 @@ const UserService = {
                     from: 'agrimarketservice123@gmail.com',
                     to: userDetails.email,
                     subject: "Froget Password",
-                    text: "You can change the password by the given link http://localhost:3000/user/forgetpassword"
+                    text: "You can change the password by the given link https://movie-list-apllication.onrender.com/user/forgetpassword"
                 };
                 MailSender.transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
