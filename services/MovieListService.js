@@ -23,12 +23,13 @@ const MovieListService = {
                 isPublic: movieListDetails.isPublic
             }
             const list = await MovieList.findOne({ name: movieListDetails.name });
-            console.log(movieListDetails,list,movieList);
-            if (list.userId === userId) {
+            console.log(movieListDetails, list, movieList);
+            if (list && list.userId === userId) {
                 return { message: "Movie list name already exists, please try another name" }
             }
             else {
-                await MovieList.create(movieList);
+                const newMovieList = await MovieList.create(movieList);
+                console.log(newMovieList);
                 return { message: "Movie list created successfully" };
             }
         } catch (error) {
