@@ -136,10 +136,19 @@ const MovieListService = {
             const allmovieList = await MovieList.find({
                 userId: userId
             });
-            return allmovieList;
+            if(allmovieList.length===0){
+                return {
+                    success:false
+                }
+            }
+            return {
+                success:true,
+                allMovieLists:allmovieList
+            };
         }
         catch (error) {
             return {
+                success:false,
                 message: "Failed to delete movie list"
             }
         }
