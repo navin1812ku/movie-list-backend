@@ -16,21 +16,26 @@ const MovieListService = {
     },
     creatMovieList: async (userId, movieListDetails) => {
         try {
-            const movieList = {
-                userId: userId,
-                name: movieListDetails.name,
-                movies: [],
-                isPublic: movieListDetails.isPublic
-            }
-            const list = await MovieList.findOne({ name: movieListDetails.name });
-            console.log(movieListDetails, list, movieList);
-            if (list && list.userId === userId) {
-                return { message: "Movie list name already exists, please try another name" }
+            const list = await MovieList.findOne({ name: movieListDetails.name, userId: userId });
+            console.log(movieListDetails);
+            if (list) {
+                return {
+                    success: false,
+                    message: "Movie list name already exists, please try another name"
+                }
             }
             else {
+                const movieList = {
+                    userId: userId,
+                    name: movieListDetails.name,
+                    movies: [],
+                    isPublic: movieListDetails.isPublic
+                }
                 const newMovieList = await MovieList.create(movieList);
-                console.log(newMovieList);
-                return { message: "Movie list created successfully" };
+                return {
+                    success: true,
+                    message: "Movie list created successfully"
+                };
             }
         } catch (error) {
             return { error: 'Failed to create movie list' };
@@ -136,24 +141,25 @@ const MovieListService = {
             const allmovieList = await MovieList.find({
                 userId: userId
             });
-            if(allmovieList.length===0){
+            if (allmovieList.length === 0) {
                 return {
-                    success:false
+                    success: false,
+                    message: "No movie List available start creating the movie list by clicking create above"
                 }
             }
             return {
-                success:true,
-                allMovieLists:allmovieList
+                success: true,
+                allMovieLists: allmovieList
             };
         }
         catch (error) {
             return {
-                success:false,
+                success: false,
                 message: "Failed to delete movie list"
             }
         }
     },
-    searchMovieLists: async (name) => {
+    searchMovieLists: async (userId, name) => {
         try {
             const lowerCasedName = name.toLowerCase();
             const regexName = new RegExp(`^${lowerCasedName}$`, 'i');
